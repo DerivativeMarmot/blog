@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/rclone/cover.jpg">
 <meta property="article:published_time" content="2022-07-27T03:43:23.000Z">
-<meta property="article:modified_time" content="2022-07-27T04:25:16.646Z">
+<meta property="article:modified_time" content="2022-07-27T04:43:30.631Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="windows">
 <meta property="article:tag" content="rclone">
@@ -201,7 +201,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      406 字
+      611 字
     </span>
   
 
@@ -210,7 +210,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      4 分钟
+      6 分钟
     </span>
   
 
@@ -243,20 +243,25 @@
             
             <div class="markdown-body">
               <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>windows下映射网络文件夹</p>
-<h1 id="下载和启动-rclone"><a href="#下载和启动-rclone" class="headerlink" title="下载和启动 rclone"></a>下载和启动 rclone</h1><p>解压文件夹，文件夹内打开 cmd，输入</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">rclone</span><br></code></pre></td></tr></table></figure>
+<h1 id="下载和启动-rclone"><a href="#下载和启动-rclone" class="headerlink" title="下载和启动 rclone"></a>下载和启动 rclone</h1><figure class="highlight awk"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>rclone.org<span class="hljs-regexp">/downloads/</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="生成-config"><a href="#生成-config" class="headerlink" title="生成 config"></a>生成 config</h1><h2 id="默认-config-路径"><a href="#默认-config-路径" class="headerlink" title="默认 config 路径"></a>默认 config 路径</h2><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">rclone config file<br># C:<span class="hljs-symbol">\U</span>sers<span class="hljs-symbol">\M</span>armot<span class="hljs-symbol">\A</span>ppData<span class="hljs-symbol">\R</span>oaming<span class="hljs-symbol">\r</span>clone<span class="hljs-symbol">\r</span>clone.conf<br></code></pre></td></tr></table></figure>
+<p>解压文件夹，文件夹内打开 cmd，输入</p>
+<figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">rclone</span><br></code></pre></td></tr></table></figure>
 
-<h2 id="生成-config-1"><a href="#生成-config-1" class="headerlink" title="生成 config"></a>生成 config</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile">rclone config<br><br>name = marmot <span class="hljs-comment">#example</span><br>type = webdav<br>url = &lt;网络文件夹&gt;<br>vendor = sharepoint-ntlm <span class="hljs-comment"># self-host</span><br>user = &lt;username&gt; <span class="hljs-comment">#如果有验证</span><br>pass = &lt;password&gt; <span class="hljs-comment">#如果有验证</span><br></code></pre></td></tr></table></figure>
+<h1 id="config"><a href="#config" class="headerlink" title="config"></a>config</h1><h2 id="默认-config-路径"><a href="#默认-config-路径" class="headerlink" title="默认 config 路径"></a>默认 config 路径</h2><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs taggerscript">&gt; rclone config file<br># C:<span class="hljs-symbol">\U</span>sers<span class="hljs-symbol">\&lt;</span>username&gt;<span class="hljs-symbol">\A</span>ppData<span class="hljs-symbol">\R</span>oaming<span class="hljs-symbol">\r</span>clone<span class="hljs-symbol">\r</span>clone.conf<br></code></pre></td></tr></table></figure>
+
+<h2 id="生成-config"><a href="#生成-config" class="headerlink" title="生成 config"></a>生成 config</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs makefile">&gt; rclone config<br><br>name = &lt;name&gt; <span class="hljs-comment"># example(marmot)</span><br>type = webdav<br>url = &lt;网络文件夹&gt; <span class="hljs-comment"># example(https://dav.xxx.org)</span><br>vendor = sharepoint-ntlm <span class="hljs-comment"># self-host</span><br>user = &lt;username&gt; <span class="hljs-comment">#如果有验证</span><br>pass = &lt;password&gt; <span class="hljs-comment">#如果有验证</span><br></code></pre></td></tr></table></figure>
 
 <h1 id="安装-winfsp"><a href="#安装-winfsp" class="headerlink" title="安装 winfsp"></a>安装 winfsp</h1><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>winfsp.dev<span class="hljs-regexp">/rel/</span><br></code></pre></td></tr></table></figure>
 
-<h1 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h1><h2 id="查看列表"><a href="#查看列表" class="headerlink" title="查看列表"></a>查看列表</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">rclone</span> lsf <span class="hljs-string">&quot;marmot:&quot;</span><br></code></pre></td></tr></table></figure>
+<p>不装报错</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">Fatal error: failed <span class="hljs-keyword">to</span> mount FUSE <span class="hljs-keyword">f</span><span class="hljs-variable">s:</span> mount stopped before calling Ini<span class="hljs-variable">t:</span> mount failed: cgofuse: cannot <span class="hljs-keyword">find</span> winfsp<br></code></pre></td></tr></table></figure>
 
-<h2 id="挂载在-Z-盘"><a href="#挂载在-Z-盘" class="headerlink" title="挂载在 Z 盘"></a>挂载在 Z 盘</h2><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">rclone</span> mount <span class="hljs-string">&quot;marmot:&quot;</span> Z:<br></code></pre></td></tr></table></figure>
+<h1 id="挂载"><a href="#挂载" class="headerlink" title="挂载"></a>挂载</h1><h2 id="查看列表"><a href="#查看列表" class="headerlink" title="查看列表"></a>查看列表</h2><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">rclone lsf <span class="hljs-string">&quot;marmot:&quot;</span></span><br></code></pre></td></tr></table></figure>
 
+<h2 id="挂载在-Z-盘"><a href="#挂载在-Z-盘" class="headerlink" title="挂载在 Z 盘"></a>挂载在 Z 盘</h2><figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">rclone mount <span class="hljs-string">&quot;marmot:&quot;</span> Z:</span><br></code></pre></td></tr></table></figure>
 
+<h1 id="没了"><a href="#没了" class="headerlink" title="没了"></a>没了</h1>
             </div>
             <hr>
             <div>
