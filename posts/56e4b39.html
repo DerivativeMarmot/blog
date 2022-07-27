@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/Install-app-on-ArchLinux/cover.jpg">
 <meta property="article:published_time" content="2022-07-27T03:43:23.000Z">
-<meta property="article:modified_time" content="2022-07-27T04:25:10.283Z">
+<meta property="article:modified_time" content="2022-07-27T18:17:53.208Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="arch">
 <meta name="twitter:card" content="summary_large_image">
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3k 字
+      4.4k 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      26 分钟
+      37 分钟
     </span>
   
 
@@ -240,108 +240,134 @@
             <h1 style="display: none">Arch Linux Setup</h1>
             
             <div class="markdown-body">
-              <h1 id="密钥登陆，禁用密码"><a href="#密钥登陆，禁用密码" class="headerlink" title="密钥登陆，禁用密码"></a>密钥登陆，禁用密码</h1><figure class="highlight yaml"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">ssh-keygen</span> <span class="hljs-string">-t</span> <span class="hljs-string">ed25519</span> <span class="hljs-string">-b</span> <span class="hljs-number">4096</span><br><br><span class="hljs-string">vim</span> <span class="hljs-string">/etc/ssh/sshd_config</span><br><span class="hljs-string">PubkeyAuthentication</span> <span class="hljs-literal">yes</span><br><span class="hljs-string">PasswordAuthentication</span> <span class="hljs-literal">no</span><br><br><span class="hljs-string">sudo</span> <span class="hljs-string">systemctl</span> <span class="hljs-string">restart</span> <span class="hljs-string">sshd.service</span><br></code></pre></td></tr></table></figure>
+              <h1 id="密钥登陆-ssh"><a href="#密钥登陆-ssh" class="headerlink" title="密钥登陆 | ssh"></a>密钥登陆 | ssh</h1><h2 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h2><p>生成密钥对，并将公钥复制进authorized_key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> ssh-keygen -t ed25519 -b 4096</span><br><span class="hljs-meta">&gt;</span><span class="bash"> mv public.key ~/.ssh/authorized_key</span><br></code></pre></td></tr></table></figure>
+<p>将私钥存入本地</p>
+<h2 id="开启验证，并禁用密码登录"><a href="#开启验证，并禁用密码登录" class="headerlink" title="开启验证，并禁用密码登录"></a>开启验证，并禁用密码登录</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> vim /etc/ssh/sshd_config</span><br>PubkeyAuthentication yes<br>PasswordAuthentication no<br></code></pre></td></tr></table></figure>
 
-
-
-<h1 id="防火墙-firewalld"><a href="#防火墙-firewalld" class="headerlink" title="防火墙 firewalld"></a>防火墙 firewalld</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo systemctl <span class="hljs-builtin-name">enable</span> firewalld.service<br>sudo systemctl start firewalld.service #不会断开已经链接的端口<br>sudo systemctl restart firewalld.service<br><br>sudo firewall-cmd <span class="hljs-attribute">--zone</span>=public --permanent <span class="hljs-attribute">--add-port</span>=&lt;port&gt;/tcp<br>sudo firewall-cmd <span class="hljs-attribute">--zone</span>=public --permanent <span class="hljs-attribute">--add-port</span>=&lt;port&gt;/udp<br><br>sudo firewall-cmd <span class="hljs-attribute">--zone</span>=public --permanent <span class="hljs-attribute">--remove-port</span>=&lt;port&gt;/tcp<br>sudo firewall-cmd <span class="hljs-attribute">--zone</span>=public --permanent <span class="hljs-attribute">--remove-port</span>=&lt;port&gt;/udp<br></code></pre></td></tr></table></figure>
-
-
+<h2 id="重启ssh"><a href="#重启ssh" class="headerlink" title="重启ssh"></a>重启ssh</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo systemctl restart sshd.service</span><br></code></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc">tar -zcvf &lt;output&gt; &lt;input&gt;<br><span class="hljs-section">tar -zxvf &lt;input&gt; -C &lt;ouput&gt;</span><br><span class="hljs-section">------------------------------</span><br><span class="hljs-code">	-c new tar file</span><br><span class="hljs-code">	-x extract tar file</span><br><span class="hljs-code">	-z gzip</span><br><span class="hljs-code">	-v show output</span><br><span class="hljs-code">	-f archive name</span><br><span class="hljs-code">	-C dir</span><br></code></pre></td></tr></table></figure>
+<h1 id="防火墙-firewalld"><a href="#防火墙-firewalld" class="headerlink" title="防火墙 firewalld"></a>防火墙 firewalld</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -Syu firewalld</span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo systemctl <span class="hljs-built_in">enable</span> firewalld.service</span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo systemctl start firewalld.service <span class="hljs-comment"># 不会断开已经建立 tcp 链接的端口</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo systemctl restart firewalld.service</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 添加端口</span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo firewall-cmd --zone=public --permanent --add-port=&lt;port&gt;/tcp</span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo firewall-cmd --zone=public --permanent --add-port=&lt;port&gt;/udp</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">#</span><span class="bash"> 移除端口</span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo firewall-cmd --zone=public --permanent --remove-port=&lt;port&gt;/tcp</span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo firewall-cmd --zone=public --permanent --remove-port=&lt;port&gt;/udp</span><br></code></pre></td></tr></table></figure>
 
+<hr>
+<h1 id="tar"><a href="#tar" class="headerlink" title="tar"></a>tar</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> tar -zcvf &lt;output&gt; &lt;input&gt; <span class="hljs-comment"># 压缩</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> tar -zxvf &lt;input&gt; -C &lt;ouput&gt; <span class="hljs-comment"># 解压</span></span><br>------------------------------<br>	-c new tar file<br>	-x extract tar file<br>	-z gzip<br>	-v show output<br>	-f archive name<br>	-C dir<br></code></pre></td></tr></table></figure>
 
-
-<h1 id="添加-user-到-group"><a href="#添加-user-到-group" class="headerlink" title="添加 user 到 group"></a>添加 user 到 group</h1><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs xml">usermod -a -G <span class="hljs-tag">&lt;<span class="hljs-name">group</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">username</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="添加-user-到-group"><a href="#添加-user-到-group" class="headerlink" title="添加 user 到 group"></a>添加 user 到 group</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> usermod -a -G &lt;group&gt; &lt;username&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>重新登陆</p>
-<h1 id="nginx-mainline"><a href="#nginx-mainline" class="headerlink" title="nginx-mainline"></a>nginx-mainline</h1><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada">sudo pacman -S nginx-mainline<br>paru -S nginx-mainline-<span class="hljs-keyword">mod</span>-dav-ext<br>paru -S nginx-mainline-<span class="hljs-keyword">mod</span>-fancyindex<br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="nginx-mainline"><a href="#nginx-mainline" class="headerlink" title="nginx-mainline"></a>nginx-mainline</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>nginx-mainline 相较于 nginx</p>
+<ul>
+<li>更多的 feature</li>
+<li>更新的版本</li>
+<li>修复了 bug</li>
+</ul>
+<h2 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -Syu nginx-mainline</span><br><span class="hljs-meta">&gt;</span><span class="bash"> paru -S nginx-mainline-mod-dav-ext <span class="hljs-comment"># 提供 webdav 服务，网络文件夹</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> paru -S nginx-mainline-mod-fancyindex <span class="hljs-comment"># 网络文件索引</span></span><br></code></pre></td></tr></table></figure>
 
+<h2 id="添加网址"><a href="#添加网址" class="headerlink" title="添加网址"></a>添加网址</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo vim /etc/nginx/nginx.conf</span><br></code></pre></td></tr></table></figure>
 
+<h3 id="主域名-major-domain"><a href="#主域名-major-domain" class="headerlink" title="主域名 | major domain"></a>主域名 | major domain</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">server&#123;<br>	server_name xxx.xxx;<br>	root path/to/root;<br>	location / &#123;<br>		index index.html index.php;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<h1 id="Certbot"><a href="#Certbot" class="headerlink" title="Certbot"></a>Certbot</h1><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo pacman -Syu certbot-nginx</span><br></code></pre></td></tr></table></figure>
+<h3 id="子域名-subdomain"><a href="#子域名-subdomain" class="headerlink" title="子域名 | subdomain"></a>子域名 | subdomain</h3><ul>
+<li><p>本地文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs shell">server&#123;<br>	server_name subdomain.xxx.xxx;<br>	root path/to/dir;<br>	location / &#123;<br>		index index.html index.php;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><p>开放出来的端口</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">server&#123;<br>	server_name subdomain.xxx.xxx;<br>	location / &#123;<br>		proxy_pass http://127.0.0.1:&lt;port&gt;;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<h1 id="certbot"><a href="#certbot" class="headerlink" title="certbot"></a>certbot</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -Syu certbot-nginx</span><br></code></pre></td></tr></table></figure>
 
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-attribute">vim</span> /etc/nginx/nginx.conf<br>server&#123;<br>    <span class="hljs-attribute">server_name</span> &lt;domain&gt;;<br>    <span class="hljs-attribute">listen</span> <span class="hljs-number">80</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="添加域名"><a href="#添加域名" class="headerlink" title="添加域名"></a>添加域名</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> vim /etc/nginx/nginx.conf</span><br>server&#123;<br>    server_name &lt;domain&gt;;<br>    listen 80;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs brainfuck"><span class="hljs-comment">sudo</span> <span class="hljs-comment">certbot</span> --<span class="hljs-comment">nginx</span> --<span class="hljs-comment">rsa</span><span class="hljs-literal">-</span><span class="hljs-comment">key</span><span class="hljs-literal">-</span><span class="hljs-comment">size</span> <span class="hljs-comment">4096</span><br></code></pre></td></tr></table></figure>
+<h2 id="为域名签证书"><a href="#为域名签证书" class="headerlink" title="为域名签证书"></a>为域名签证书</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo certbot --nginx --rsa-key-size 4096</span><br></code></pre></td></tr></table></figure>
 
-
-
-<h1 id="qBittorrent"><a href="#qBittorrent" class="headerlink" title="qBittorrent"></a>qBittorrent</h1><h2 id="qBittorrent-安装和运行"><a href="#qBittorrent-安装和运行" class="headerlink" title="qBittorrent 安装和运行"></a>qBittorrent 安装和运行</h2><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">sudo pacman qbittorrent-nox</span><br></code></pre></td></tr></table></figure>
-
-<p>安装最新版本的 qBittorrent</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">qbittorrent-nox</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="qBittorrent"><a href="#qBittorrent" class="headerlink" title="qBittorrent"></a>qBittorrent</h1><h2 id="qBittorrent-安装和运行"><a href="#qBittorrent-安装和运行" class="headerlink" title="qBittorrent 安装和运行"></a>qBittorrent 安装和运行</h2><p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -Syu qbittorrent-nox</span><br></code></pre></td></tr></table></figure>
 
 <p>运行 qBittorrent</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> qbittorrent-nox</span><br></code></pre></td></tr></table></figure>
+
 <p>弹出的提示语表明 WebUI 已经在 localhost:8080 处运行了</p>
 <p>打开浏览器输入地址 + 端口 (例如: 192.168.0.1:8080)</p>
 <p>根据提示语，默认用户名是admin，默认密码是adminadmin</p>
 <p>登陆进去就能看见 qbittorrent 整体的 WebUI 界面了</p>
-<h2 id="配置qBittorrent"><a href="#配置qBittorrent" class="headerlink" title="配置qBittorrent"></a>配置qBittorrent</h2><h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><p>鼠标停在左上角的 Tools -&gt; 点击Options -&gt; 点击Web UI -&gt; English -&gt; 滑倒最底下找到并点击 简体中文 -&gt; 将滚动条滑倒最底下 -&gt; 点击save</p>
-<p>简体中文就设置好了</p>
+<h2 id="配置qBittorrent"><a href="#配置qBittorrent" class="headerlink" title="配置qBittorrent"></a>配置qBittorrent</h2><h3 id="设置语言"><a href="#设置语言" class="headerlink" title="设置语言"></a>设置语言</h3><ul>
+<li>鼠标停在左上角的 Tools</li>
+<li>点击Options</li>
+<li>点击Web UI</li>
+<li>English</li>
+<li>滑倒最底下找到并点击 简体中文</li>
+<li>将滚动条滑倒最底下</li>
+<li>点击s ave</li>
+</ul>
 <h3 id="配置https"><a href="#配置https" class="headerlink" title="配置https"></a>配置https</h3><p>我们回到arch 的命令行上</p>
 <p>ctrl+c 关掉正在运行 WebUI</p>
 <p>进入 qb 的配置文件夹</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/home/</span>&lt;User&gt;<span class="hljs-regexp">/.config/</span>qBittorrent<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> /home/&lt;User&gt;/.config/qBittorrent</span><br></code></pre></td></tr></table></figure>
 
 <p>创建新的文件夹并进入，此文件夹用来存放证书和密钥</p>
-<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs dos"><span class="hljs-built_in">mkdir</span> ssl<br><span class="hljs-built_in">cd</span> ssl<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> mkdir ssl</span><br><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> ssl</span><br></code></pre></td></tr></table></figure>
 
 <p>接下来有两个方法可供选择</p>
-<h4 id="方法1：自己生成密钥（不推荐）"><a href="#方法1：自己生成密钥（不推荐）" class="headerlink" title="方法1：自己生成密钥（不推荐）"></a>方法1：自己生成密钥（不推荐）</h4><h5 id="生成证书和密钥"><a href="#生成证书和密钥" class="headerlink" title="生成证书和密钥"></a>生成证书和密钥</h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">openssl</span> req -x<span class="hljs-number">509</span> -newkey rsa:<span class="hljs-number">4096</span> -days <span class="hljs-number">365</span> -keyout server.key -out server.crt -nodes<br></code></pre></td></tr></table></figure>
+<h4 id="方法1：自己生成密钥（不推荐）"><a href="#方法1：自己生成密钥（不推荐）" class="headerlink" title="方法1：自己生成密钥（不推荐）"></a><del>方法1：自己生成密钥（不推荐）</del></h4><h5 id="生成证书和密钥"><a href="#生成证书和密钥" class="headerlink" title="生成证书和密钥"></a>生成证书和密钥</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> openssl req -x509 -newkey rsa:4096 -days 365 -keyout server.key -out server.crt -nodes</span><br></code></pre></td></tr></table></figure>
 
 <p>此过程会被询问 国家名字，电子邮件什么的。但这些都不需要管，一直按Enter就可以</p>
 <p>运行 ls 命令</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">ls</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> ls</span><br></code></pre></td></tr></table></figure>
 
 <p>确认有没有 server.crt 和 server.key 这两个文件，有就说明生成成功了</p>
 <p>设置这两个文件为只读权限</p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">chmod</span> <span class="hljs-number">400</span> server.crt<br><span class="hljs-attribute">chmod</span> <span class="hljs-number">400</span> server.key<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> chmod 400 server.crt</span><br><span class="hljs-meta">&gt;</span><span class="bash"> chmod 400 server.key</span><br></code></pre></td></tr></table></figure>
 
 <h5 id="使用证书和密钥"><a href="#使用证书和密钥" class="headerlink" title="使用证书和密钥"></a>使用证书和密钥</h5><p>进入 qb 的配置文件</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arduino">cd /home/&lt;User&gt;/.config<br>vim qBittorrent.config<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">cd</span> /home/&lt;User&gt;/.config</span><br><span class="hljs-meta">&gt;</span><span class="bash"> vim qBittorrent.config</span><br></code></pre></td></tr></table></figure>
 
 <p>找到有 WebUI\HTTPS 前缀的的三个参数并添加或更改它们的值</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs gradle">WebuUI\HTTPS\CertificationPath=<span class="hljs-regexp">/home/</span>&lt;User&gt;<span class="hljs-regexp">/.config/</span>qBittorrent<span class="hljs-regexp">/ssl/</span>server.crt<br>WebuUI\HTTPS\Eabled=<span class="hljs-keyword">true</span><br>WebuUI\HTTPS\KeyPath=<span class="hljs-regexp">/home/</span>&lt;User&gt;<span class="hljs-regexp">/.config/</span>qBittorrent<span class="hljs-regexp">/ssl/</span>server.key<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">WebuUI\HTTPS\CertificationPath=/home/&lt;User&gt;/.config/qBittorrent/ssl/server.crt<br>WebuUI\HTTPS\Eabled=true<br>WebuUI\HTTPS\KeyPath=/home/&lt;User&gt;/.config/qBittorrent/ssl/server.key<br></code></pre></td></tr></table></figure>
 
 <p>最后保存退出 (ESC -&gt; : -&gt; wq -&gt; Enter)</p>
-<h4 id="方法2：使用-letsencrypt-获取证书链（推荐）"><a href="#方法2：使用-letsencrypt-获取证书链（推荐）" class="headerlink" title="方法2：使用 letsencrypt 获取证书链（推荐）"></a>方法2：使用 letsencrypt 获取证书链（推荐）</h4><p>获取到的密钥默认会保存在</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/etc/</span>letsencrypt<span class="hljs-regexp">/live/</span>&lt;your.domain&gt;<br></code></pre></td></tr></table></figure>
+<h4 id="方法2：使用-letsencrypt-获取证书链（推荐）"><a href="#方法2：使用-letsencrypt-获取证书链（推荐）" class="headerlink" title="方法2：使用 letsencrypt 获取证书链（推荐）"></a>方法2：使用 letsencrypt 获取证书链（推荐）</h4><p>详情查看 <a href="#certbot">certbot</a></p>
+<p>获取到的密钥默认会保存在</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> /etc/letsencrypt/live/&lt;your.domain&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>这里会生成4个 .pem 文件</p>
 <p>使用 ls 命令查看（要加sudo），README文件不要管，我们用不着</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ sudo ls <span class="hljs-regexp">/etc/</span>letsencrypt<span class="hljs-regexp">/live/</span>&lt;your.domain&gt;<br>$ cert.pem  chain.pem  fullchain.pem  privkey.pem  README<br></code></pre></td></tr></table></figure>
-
-
-
-
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo ls /etc/letsencrypt/live/&lt;your.domain&gt;</span><br><span class="hljs-meta">&gt;</span><span class="bash"> cert.pem  chain.pem  fullchain.pem  privkey.pem  README</span><br></code></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="H5ai"><a href="#H5ai" class="headerlink" title="H5ai"></a>H5ai</h1><h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">location / &#123;<br>	<span class="hljs-regexp">/h5ai/</span>_h5ai<span class="hljs-regexp">/public/i</span>ndex.php<br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="h5ai"><a href="#h5ai" class="headerlink" title="h5ai"></a>h5ai</h1><h2 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">location / &#123;<br>	<span class="hljs-regexp">/h5ai/</span>_h5ai<span class="hljs-regexp">/public/i</span>ndex.php<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>重启 nginx 服务</p>
-<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">sudo systemctl <span class="hljs-built_in">restart</span> nginx.service<br></code></pre></td></tr></table></figure>
+<figure class="highlight node-repl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs node-repl"><span class="hljs-meta">&gt;</span> <span class="javascript">sudo systemctl restart nginx.service</span><br></code></pre></td></tr></table></figure>
 
 
 
 <h2 id="主页面加密码："><a href="#主页面加密码：" class="headerlink" title="主页面加密码："></a>主页面加密码：</h2><p><a target="_blank" rel="noopener" href="https://www.tok9.com/archives/386/">https://www.tok9.com/archives/386/</a></p>
-<h2 id="public-index-php-加密码"><a href="#public-index-php-加密码" class="headerlink" title="public/index.php 加密码"></a>public/index.php 加密码</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">head <span class="hljs-regexp">/dev/u</span>random | tr -dc A-Za-z0-<span class="hljs-number">9</span> | head -c length ; echo <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment">#随机字符串</span><br>echo -n <span class="hljs-string">&quot;密码&quot;</span> |sha512sum<br></code></pre></td></tr></table></figure>
+<h2 id="public-index-php-加密码"><a href="#public-index-php-加密码" class="headerlink" title="public/index.php 加密码"></a>public/index.php 加密码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> head /dev/urandom | tr -dc A-Za-z0-9 | head -c length ; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;&#x27;</span> <span class="hljs-comment"># 随机字符串</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;密码&quot;</span> |sha512sum <span class="hljs-comment"># 加密密码</span></span><br></code></pre></td></tr></table></figure>
 
 
 
-<h3 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs routeros">sudo pacman -S imagick # 安装 imagemagick (PDF thumbs)<br>sudo pacman -S ffmpeg<br><br>sudo vim /etc/php/php.ini<br><span class="hljs-builtin-name">enable</span><br>	gd<br>	zip<br>	exif<br><span class="hljs-builtin-name">add</span><br>	<span class="hljs-attribute">extension</span>=imagick<br>sudo systemctl restart php-fpm.service<br></code></pre></td></tr></table></figure>
+<h3 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -S imagick <span class="hljs-comment"># 安装 imagemagick (PDF thumbs)</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -S ffmpeg</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo vim /etc/php/php.ini</span><br>enable<br>	gd<br>	zip<br>	exif<br>add<br>	extension=imagick<br><span class="hljs-meta">&gt;</span><span class="bash"> sudo systemctl restart php-fpm.service</span><br></code></pre></td></tr></table></figure>
 
-<hr>
-<h1 id="内网-前缀"><a href="#内网-前缀" class="headerlink" title="内网 - 前缀"></a>内网 - 前缀</h1><p><a target="_blank" rel="noopener" href="https://library.marmot.website/">https://library.marmot.website/</a></p>
-<p>路径：</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/usr/</span>share<span class="hljs-regexp">/nginx/</span>html/library<br></code></pre></td></tr></table></figure>
-
-
-
-<hr>
 <h1 id="AriaNg"><a href="#AriaNg" class="headerlink" title="AriaNg"></a>AriaNg</h1><h2 id="下载最新-release-包"><a href="#下载最新-release-包" class="headerlink" title="下载最新 release 包"></a>下载最新 release 包</h2><p><a target="_blank" rel="noopener" href="https://github.com/mayswind/AriaNg/releases">Releases · mayswind/AriaNg (github.com)</a></p>
 <h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>aria2c –conf-path=PATH</p>
+<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -Syu docker docker-compose<br></code></pre></td></tr></table></figure>
+
+<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><h3 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>基于 docker-compose.yaml 运行 docker</li>
+<li>可读性强</li>
+<li>具备较强的可迁移性</li>
+</ul>
+<h3 id="通用模板"><a href="#通用模板" class="headerlink" title="通用模板"></a>通用模板</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs docker-compose">version: &#x27;&lt;docker-compose版本号&gt;&#x27;<br><br>services:<br>  &lt;container_specifier&gt;:<br>    image: &lt;image_name from dockerhub&gt;<br>    container_name: &lt;container_name&gt;<br>    volumes:<br>      - &lt;/path/to/dir&gt;:&lt;/path/to/dir/in/container&gt;<br>    ports:<br>      - &lt;port&gt;:&lt;port&gt;<br>    command: &lt;cmd&gt;<br>    restart: always<br></code></pre></td></tr></table></figure>
+
+<h3 id="运行与关闭"><a href="#运行与关闭" class="headerlink" title="运行与关闭"></a>运行与关闭</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">docker<br>├── container1<br>│	├── # 当前位置<br>│	└── docker-compose.yaml<br>│<br>├── container2<br>│	└── docker-compose.yaml<br>│<br>└── container3<br>	└── docker-compose.yaml<br></code></pre></td></tr></table></figure>
+
+<p><strong>同级目录存在 docker-compose.yaml 文件才可运行</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> docker-compose up <span class="hljs-comment"># 前台运行</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> docker-compose up -d <span class="hljs-comment"># 后台运行</span></span><br><span class="hljs-meta"></span><br><span class="hljs-meta">&gt;</span><span class="bash"> docker-compose down <span class="hljs-comment"># 关闭</span></span><br></code></pre></td></tr></table></figure>
+
 <hr>
 <h1 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/51bd2b82ff35">Linux设置密钥登录 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/set-ssh-login-key.html">设置 SSH 通过密钥登录 | 菜鸟教程 (runoob.com)</a></p>
