@@ -24,10 +24,10 @@
 <meta property="og:description" content="在 arch 上安装各种 app">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://derivativemarmot.github.io/blog/img/Install-app-on-ArchLinux/cover.jpg">
-<meta property="article:published_time" content="2022-07-27T03:43:23.000Z">
-<meta property="article:modified_time" content="2022-07-28T17:34:11.943Z">
+<meta property="article:published_time" content="2021-07-27T03:43:23.000Z">
+<meta property="article:modified_time" content="2022-08-23T07:23:59.868Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="arch">
+<meta property="article:tag" content="archlinux">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://derivativemarmot.github.io/blog/img/Install-app-on-ArchLinux/cover.jpg">
   
@@ -188,8 +188,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-07-26 20:43" pubdate>
-        2022年7月26日 晚上
+      <time datetime="2021-07-26 20:43" pubdate>
+        2021年7月26日 晚上
       </time>
     </span>
   
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4.5k 字
+      5k 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      38 分钟
+      42 分钟
     </span>
   
 
@@ -238,6 +238,12 @@
           <article class="post-content mx-auto">
             <!-- SEO header -->
             <h1 style="display: none">Arch Linux Setup</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2022年8月23日 凌晨
+                
+              </p>
             
             <div class="markdown-body">
               <h1 id="密钥登陆-ssh"><a href="#密钥登陆-ssh" class="headerlink" title="密钥登陆 | ssh"></a>密钥登陆 | ssh</h1><h2 id="生成"><a href="#生成" class="headerlink" title="生成"></a>生成</h2><p>生成密钥对，并将公钥复制进authorized_key</p>
@@ -352,9 +358,11 @@
 
 <h3 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -S imagick <span class="hljs-comment"># 安装 imagemagick (PDF thumbs)</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -S ffmpeg</span><br><span class="hljs-meta"></span><br><span class="hljs-meta">&gt;</span><span class="bash"> sudo vim /etc/php/php.ini</span><br>enable<br>	gd<br>	zip<br>	exif<br>add<br>	extension=imagick<br><span class="hljs-meta">&gt;</span><span class="bash"> sudo systemctl restart php-fpm.service</span><br></code></pre></td></tr></table></figure>
 
+<hr>
 <h1 id="AriaNg"><a href="#AriaNg" class="headerlink" title="AriaNg"></a>AriaNg</h1><h2 id="下载最新-release-包"><a href="#下载最新-release-包" class="headerlink" title="下载最新 release 包"></a>下载最新 release 包</h2><p><a target="_blank" rel="noopener" href="https://github.com/mayswind/AriaNg/releases">Releases · mayswind/AriaNg (github.com)</a></p>
 <h2 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h2><p>aria2c –conf-path=PATH</p>
-<h1 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h1><h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -Syu docker docker-compose<br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="docker-2022-7-28-更新"><a href="#docker-2022-7-28-更新" class="headerlink" title="docker (2022/7/28 更新)"></a>docker (2022/7/28 更新)</h1><h2 id="安装-1"><a href="#安装-1" class="headerlink" title="安装"></a>安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -Syu docker docker-compose<br></code></pre></td></tr></table></figure>
 
 <h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><h3 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h3><ul>
 <li>基于 docker-compose.yaml 运行 docker</li>
@@ -372,10 +380,32 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> docker-compose up <span class="hljs-comment"># 前台运行</span></span><br><span class="hljs-meta">&gt;</span><span class="bash"> docker-compose up -d <span class="hljs-comment"># 后台运行</span></span><br><span class="hljs-meta"></span><br><span class="hljs-meta">&gt;</span><span class="bash"> docker-compose down <span class="hljs-comment"># 关闭</span></span><br></code></pre></td></tr></table></figure>
 
 <hr>
+<h1 id="atom-2022-8-22-更新"><a href="#atom-2022-8-22-更新" class="headerlink" title="atom (2022/8/22 更新)"></a>atom (2022/8/22 更新)</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>文本编辑器</li>
+</ul>
+<h2 id="安装-2"><a href="#安装-2" class="headerlink" title="安装"></a>安装</h2><ul>
+<li><p>安装 remakepkg</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> paru -S remakepkg</span><br></code></pre></td></tr></table></figure></li>
+<li><p>在 <a target="_blank" rel="noopener" href="https://archlinux.pkgs.org/">Arch Linux Repositories</a> 下载最新版 apm</p>
+</li>
+<li><p>新建 REPKGBUILD，并添加</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> vim REPKGBUILD</span><br>remove-depend nodejs-lts-gallium<br>add-depend nodejs<br></code></pre></td></tr></table></figure></li>
+<li><p>更改依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> repkg -i ./&lt;文件名&gt; -r REPKGBUILD</span><br><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; Removing dependency nodejs-lts-gallium</span><br><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; Adding dependency nodejs</span><br><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; Adding provision apm=2.6.5-2</span><br><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; Successfully created ./&lt;新文件名&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>本地安装 apm</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> sudo pacman -U ./&lt;新文件名&gt;</span><br></code></pre></td></tr></table></figure></li>
+<li><p>安装 atom editor</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> paru -S atom-editor-beta-bin</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<hr>
 <h1 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/51bd2b82ff35">Linux设置密钥登录 - 简书 (jianshu.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/w3cnote/set-ssh-login-key.html">设置 SSH 通过密钥登录 | 菜鸟教程 (runoob.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-shell.html">Shell 教程 | 菜鸟教程 (runoob.com)</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.yisu.com/help/id_104.html">SSL安全证书证书安装_中间证书/证书链安装指南 - 帮助文档 - 亿速云 (yisu.com)</a></p>
+<p>atom</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?id=275264">nodejs-lts-gallium and nodejs are in conflict</a></li>
+</ul>
 
             </div>
             <hr>
@@ -386,7 +416,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/blog/tags/arch/">arch</a>
+                      <a class="hover-with-bg" href="/blog/tags/archlinux/">archlinux</a>
                     
                   </div>
                 
