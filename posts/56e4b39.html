@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://derivativemarmot.github.io/blog/img/Install-app-on-ArchLinux/cover.jpg">
 <meta property="article:published_time" content="2021-07-27T03:43:23.000Z">
-<meta property="article:modified_time" content="2023-12-03T00:44:45.129Z">
+<meta property="article:modified_time" content="2023-12-03T19:09:04.753Z">
 <meta property="article:author" content="Marmot">
 <meta property="article:tag" content="archlinux">
 <meta name="twitter:card" content="summary_large_image">
@@ -279,7 +279,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：2023年12月2日 下午
+                    本文最后更新于：2023年12月3日 上午
                   
                 
               </p>
@@ -431,9 +431,9 @@
 <ul>
 <li>id 获取方式<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">id</span> -u &lt;username&gt;</span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash"><span class="hljs-built_in">id</span> -g &lt;username&gt;</span><br></code></pre></td></tr></table></figure></li>
 </ul>
-<h3 id="运行与关闭"><a href="#运行与关闭" class="headerlink" title="运行与关闭"></a>运行与关闭</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">docker<br>├── container1<br>│	├── # 当前位置<br>│	└── docker-compose.yaml<br>│<br>├── container2<br>│	└── docker-compose.yaml<br>│<br>└── container3<br>	└── docker-compose.yaml<br></code></pre></td></tr></table></figure>
+<h3 id="运行与关闭"><a href="#运行与关闭" class="headerlink" title="运行与关闭"></a>运行与关闭</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs text">docker<br>├── container1<br>│	├── # 当前位置<br>│	└── docker-compose.yml<br>│<br>├── container2<br>│	└── docker-compose.yml<br>│<br>└── container3<br>	└── docker-compose.yml<br></code></pre></td></tr></table></figure>
 
-<p><strong>同级目录存在 docker-compose.yaml 文件才可运行</strong></p>
+<p><strong>同级目录存在 docker-compose.yml 文件才可运行</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">docker-compose up <span class="hljs-comment"># 前台运行</span></span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">docker-compose up -d <span class="hljs-comment"># 后台运行</span></span><br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">&gt; </span><span class="language-bash">docker-compose down <span class="hljs-comment"># 关闭</span></span><br></code></pre></td></tr></table></figure>
 
 
